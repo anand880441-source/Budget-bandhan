@@ -1,5 +1,5 @@
 {
-  "name": "budget-bandhan-fresh",
+  "name": "budget-bandhan",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,8 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.13.6",
+    "cloudinary": "^1.41.3",
+    "exceljs": "^4.4.0",
+    "multer-storage-cloudinary": "^4.0.0",
+    "pdfkit": "^0.17.2",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "react-hook-form": "^7.71.2",
+    "react-hot-toast": "^2.6.0",
+    "react-router-dom": "^7.13.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
