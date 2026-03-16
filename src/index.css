@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Poppins:wght@300;400;500;600;700&family=Prata&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply font-body bg-cream-500 text-gray-800;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-saffron-500 hover:bg-saffron-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg;
+  }
+
+  .btn-secondary {
+    @apply bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg;
+  }
+
+  .btn-outline {
+    @apply border-2 border-saffron-500 text-saffron-500 hover:bg-saffron-500 hover:text-white font-semibold py-2 px-4 rounded-lg transition duration-300;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-lg p-6 border-2 border-saffron-100 relative overflow-hidden;
+  }
+
+  .card::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-saffron-500 via-emerald-500 to-saffron-500;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-2 border-2 border-saffron-200 rounded-lg focus:border-saffron-500 focus:outline-none transition duration-300 bg-white;
+  }
+
+  .nav-link {
+    @apply text-gray-700 hover:text-saffron-500 px-3 py-2 rounded-md text-sm font-medium transition duration-300;
+  }
+
+  .nav-link-active {
+    @apply text-saffron-500 border-b-2 border-saffron-500;
+  }
+}
+
+@layer utilities {
+  .border-paisley {
+    border-image: repeating-linear-gradient(45deg, #FF9933, #FF9933 10px, #046A38 10px, #046A38 20px) 20;
+  }
+
+  .bg-gradient-wedding {
+    @apply bg-gradient-to-r from-saffron-500 via-turmeric-500 to-emerald-500;
+  }
+}
