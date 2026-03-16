@@ -9,6 +9,7 @@ import BudgetWizard from './pages/dashboard/BudgetWizard';
 import api from './services/api';
 import WeddingDetails from './pages/dashboard/WeddingDetails';
 import EditBudgetWizard from './pages/dashboard/EditBudgetWizard';
+import DecorLibrary from './pages/dashboard/DecorLibrary';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -205,17 +206,22 @@ const Dashboard = () => {
             </div>
           </Link>
 
-          {/* Decor Library Card - Coming Soon */}
-          <div className="bg-white border-2 border-gray-200 rounded-xl p-6 opacity-50 cursor-not-allowed">
-            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">🎨</span>
+          {/* Decor Library Card */}
+          <Link
+            to="/dashboard/decor"
+            className="block group"
+          >
+            <div className="bg-white border-2 border-purple-100 rounded-xl p-6 hover:border-purple-500 hover:shadow-lg transition-all transform hover:-translate-y-1">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-500 group-hover:text-white transition">
+                <span className="text-2xl">🎨</span>
+              </div>
+              <h3 className="font-heading text-xl text-purple-600 mb-2 text-center">Decor Library</h3>
+              <p className="text-sm text-gray-600 text-center">Browse Indian wedding decor with cost insights</p>
+              <div className="mt-4 text-center">
+                <span className="text-purple-500 group-hover:text-purple-600 font-medium">Explore Now →</span>
+              </div>
             </div>
-            <h3 className="font-heading text-xl text-gray-600 mb-2 text-center">Decor Library</h3>
-            <p className="text-sm text-gray-500 text-center">Coming Soon</p>
-            <div className="mt-4 text-center">
-              <span className="text-gray-400">🔒 Coming Soon</span>
-            </div>
-          </div>
+          </Link>
         </div>
 
         {/* Saved Wedding Plans Section */}
@@ -447,6 +453,11 @@ function AppContent() {
       <Route path="/dashboard/budget-wizard/:id" element={
         <ProtectedRoute>
           <EditBudgetWizard />
+        </ProtectedRoute>
+      } />
+      <Route path="/dashboard/decor" element={
+        <ProtectedRoute>
+          <DecorLibrary />
         </ProtectedRoute>
       } />
     </Routes>
