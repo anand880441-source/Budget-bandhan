@@ -11,6 +11,7 @@ import WeddingDetails from './pages/dashboard/WeddingDetails';
 import EditBudgetWizard from './pages/dashboard/EditBudgetWizard';
 import DecorLibrary from './pages/dashboard/DecorLibrary';
 import ArtistDatabase from './pages/dashboard/ArtistDatabase';
+import FnBPlanning from './pages/dashboard/FnBPlanning';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -118,6 +119,7 @@ const Dashboard = () => {
               <Link to="/dashboard/guests" className="hover:text-saffron-200 transition">Guest Management</Link>
               <Link to="/dashboard/budget-wizard" className="hover:text-saffron-200 transition">Budget Wizard</Link>
               <Link to="/dashboard/artists" className="hover:text-saffron-200 transition">Artists</Link>
+              <Link to="/dashboard/fnb" className="hover:text-saffron-200 transition">F&B Planning</Link>
               <span>Welcome, {user?.name}!</span>
               <button
                 onClick={logout}
@@ -465,6 +467,11 @@ function AppContent() {
       <Route path="/dashboard/artists" element={
         <ProtectedRoute>
           <ArtistDatabase />
+        </ProtectedRoute>
+      } />
+      <Route path="/dashboard/fnb" element={
+        <ProtectedRoute>
+          <FnBPlanning />
         </ProtectedRoute>
       } />
     </Routes>

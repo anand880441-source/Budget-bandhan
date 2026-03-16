@@ -7,6 +7,7 @@ import guestRoutes from './routes/guestRoutes.js';
 import weddingRoutes from './routes/weddingRoutes.js';
 import decorRoutes from './routes/decorRoutes.js';
 import artistRoutes from './routes/artistRoutes.js';
+import fnbRoutes from './routes/fnbRoutes.js';
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use('/api/guests', guestRoutes);
 app.use('/api/weddings', weddingRoutes);
 app.use('/api/decor', decorRoutes);
 app.use('/api/artists', artistRoutes);
+app.use('/api/fnb', fnbRoutes);
 
 
 
