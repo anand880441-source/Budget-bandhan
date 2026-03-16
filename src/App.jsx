@@ -6,7 +6,9 @@ import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import GuestManagement from './pages/dashboard/GuestManagement';
 import BudgetWizard from './pages/dashboard/BudgetWizard';
-import api from './services/api';  
+import api from './services/api';
+import WeddingDetails from './pages/dashboard/WeddingDetails';
+import EditBudgetWizard from './pages/dashboard/EditBudgetWizard';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -434,6 +436,17 @@ function AppContent() {
       <Route path="/dashboard/budget-wizard" element={
         <ProtectedRoute>
           <BudgetWizard />
+        </ProtectedRoute>
+      } />
+      <Route path="/dashboard/wedding/:id" element={
+        <ProtectedRoute>
+          <WeddingDetails />
+        </ProtectedRoute>
+      } />
+
+      <Route path="/dashboard/budget-wizard/:id" element={
+        <ProtectedRoute>
+          <EditBudgetWizard />
         </ProtectedRoute>
       } />
     </Routes>
