@@ -62,9 +62,6 @@ export const getWeddingById = async (req, res) => {
 // @desc    Update wedding
 // @route   PUT /api/weddings/:id
 // @access  Private
-// @desc    Update wedding
-// @route   PUT /api/weddings/:id
-// @access  Private
 export const updateWedding = async (req, res) => {
   try {
     const wedding = await Wedding.findOne({
@@ -73,23 +70,12 @@ export const updateWedding = async (req, res) => {
     });
 
     if (wedding) {
-      // Update wedding fields
       Object.assign(wedding, req.body);
 
-      // Recalculate base budget if key fields changed
-      if (
-        req.body.city ||
-        req.body.venueTier ||
-        req.body.guestCount ||
-        req.body.outstationPercentage ||
-        req.body.roomBlocks
-      ) {
+      // Recalculate budget if key fields changed
+      if (req.body.city || req.body.venueTier || req.body.guestCount) {
         wedding.budgetRanges = await calculateBudgetRanges(wedding);
       }
-
-      // Calculate total budget including decor and artists
-      const totalBudget = await calculateTotalBudget(wedding);
-      wedding.totalBudget = totalBudget;
 
       const updatedWedding = await wedding.save();
       res.json(updatedWedding);
@@ -97,8 +83,8 @@ export const updateWedding = async (req, res) => {
       res.status(404).json({ message: "Wedding not found" });
     }
   } catch (error) {
-    console.error("Error in updateWedding:", error);
-    res.status(500).json({ message: "Server error", error: error.message });
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
