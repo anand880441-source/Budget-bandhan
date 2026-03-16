@@ -31,7 +31,17 @@ export const getWeddings = async (req, res) => {
     const weddings = await Wedding.find({ user: req.user._id }).sort({
       createdAt: -1,
     });
-    res.json(weddings);
+    
+    // Calculate total budget for each wedding
+    const weddingsWithBudget = await Promise.all(
+      weddings.map(async (wedding) => {
+        const weddingObj = wedding.toObject();
+        weddingObj.totalBudget = await calculateTotalBudget(wedding);
+        return weddingObj;
+      })
+    );
+    
+    res.json(weddingsWithBudget);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -49,7 +59,11 @@ export const getWeddingById = async (req, res) => {
     });
 
     if (wedding) {
-      res.json(wedding);
+      // Calculate total budget before sending
+      const weddingObj = wedding.toObject();
+      weddingObj.totalBudget = await calculateTotalBudget(wedding);
+      
+      res.json(weddingObj);
     } else {
       res.status(404).json({ message: "Wedding not found" });
     }
@@ -78,7 +92,12 @@ export const updateWedding = async (req, res) => {
       }
 
       const updatedWedding = await wedding.save();
-      res.json(updatedWedding);
+      
+      // Calculate total budget for response
+      const weddingObj = updatedWedding.toObject();
+      weddingObj.totalBudget = await calculateTotalBudget(updatedWedding);
+      
+      res.json(weddingObj);
     } else {
       res.status(404).json({ message: "Wedding not found" });
     }

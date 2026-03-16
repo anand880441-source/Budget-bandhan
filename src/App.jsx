@@ -10,6 +10,7 @@ import api from './services/api';
 import WeddingDetails from './pages/dashboard/WeddingDetails';
 import EditBudgetWizard from './pages/dashboard/EditBudgetWizard';
 import DecorLibrary from './pages/dashboard/DecorLibrary';
+import ArtistDatabase from './pages/dashboard/ArtistDatabase';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -116,6 +117,7 @@ const Dashboard = () => {
               <Link to="/dashboard" className="hover:text-saffron-200 transition">Dashboard</Link>
               <Link to="/dashboard/guests" className="hover:text-saffron-200 transition">Guest Management</Link>
               <Link to="/dashboard/budget-wizard" className="hover:text-saffron-200 transition">Budget Wizard</Link>
+              <Link to="/dashboard/artists" className="hover:text-saffron-200 transition">Artists</Link>
               <span>Welcome, {user?.name}!</span>
               <button
                 onClick={logout}
@@ -458,6 +460,11 @@ function AppContent() {
       <Route path="/dashboard/decor" element={
         <ProtectedRoute>
           <DecorLibrary />
+        </ProtectedRoute>
+      } />
+      <Route path="/dashboard/artists" element={
+        <ProtectedRoute>
+          <ArtistDatabase />
         </ProtectedRoute>
       } />
     </Routes>
