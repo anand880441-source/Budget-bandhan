@@ -8,7 +8,7 @@ const Register = () => {
   const navigate = useNavigate();
   const { register: registerUser } = useAuth();
   const [loading, setLoading] = useState(false);
-  
+
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const password = watch('password');
 
@@ -30,26 +30,26 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-saffron-50 to-cream-500 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-cream-500 to-saffron-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       {/* Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-turmeric-200 rounded-full opacity-20"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-emerald-200 rounded-full opacity-20"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-saffron-100 rounded-full opacity-10"></div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-turmeric-200 rounded-full opacity-25 blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-emerald-200 rounded-full opacity-25 blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-saffron-100 rounded-full opacity-15 blur-2xl"></div>
       </div>
 
-      <div className="max-w-md w-full space-y-8 relative">
+      <div className="max-w-md w-full space-y-8 relative animate-fade-in-up">
         {/* Header with Indian Motif */}
         <div className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center shadow-lg">
-              <span className="text-4xl">🌸</span>
+            <div className="jharokha-icon w-20 h-24 bg-gradient-to-b from-emerald-400 to-emerald-600 shadow-xl mx-auto">
+              <span className="text-4xl animate-float inline-block">🌸</span>
             </div>
           </div>
-          <h2 className="font-heading text-3xl text-emerald-600">
-            Begin Your Journey with <span className="text-saffron-600">BudgetBandhan</span>
+          <h2 className="font-heading text-3xl text-emerald-600 mt-2">
+            Begin Your Journey with <span className="text-gold-foil">BudgetBandhan</span>
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-gray-500">
             Plan your dream wedding with peace of mind
           </p>
         </div>
@@ -67,7 +67,7 @@ const Register = () => {
                 <input
                   id="name"
                   type="text"
-                  {...register('name', { 
+                  {...register('name', {
                     required: 'Name is required',
                     minLength: {
                       value: 2,
@@ -93,7 +93,7 @@ const Register = () => {
                 <input
                   id="email"
                   type="email"
-                  {...register('email', { 
+                  {...register('email', {
                     required: 'Email is required',
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -119,7 +119,7 @@ const Register = () => {
                 <input
                   id="password"
                   type="password"
-                  {...register('password', { 
+                  {...register('password', {
                     required: 'Password is required',
                     minLength: {
                       value: 6,
@@ -145,7 +145,7 @@ const Register = () => {
                 <input
                   id="confirmPassword"
                   type="password"
-                  {...register('confirmPassword', { 
+                  {...register('confirmPassword', {
                     required: 'Please confirm your password',
                     validate: value => value === password || 'Passwords do not match'
                   })}
@@ -163,8 +163,8 @@ const Register = () => {
               <input
                 id="terms"
                 type="checkbox"
-                {...register('terms', { 
-                  required: 'You must accept the terms and conditions' 
+                {...register('terms', {
+                  required: 'You must accept the terms and conditions'
                 })}
                 className="h-4 w-4 text-emerald-500 focus:ring-emerald-400 border-gray-300 rounded"
               />
@@ -201,19 +201,11 @@ const Register = () => {
             </div>
           </form>
 
-          {/* Divider with Indian Pattern */}
+          {/* Divider — Rangoli style */}
           <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-emerald-200"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-emerald-500">✨ Already have an account? ✨</span>
-              </div>
-            </div>
-
+            <div className="rangoli-divider"></div>
             {/* Login Link */}
-            <div className="mt-6 text-center">
+            <div className="text-center">
               <Link
                 to="/login"
                 className="inline-flex items-center text-saffron-600 hover:text-saffron-500 font-medium"

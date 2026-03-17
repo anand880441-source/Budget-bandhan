@@ -8,7 +8,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [loading, setLoading] = useState(false);
-  
+
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
@@ -25,25 +25,26 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-saffron-50 to-cream-500 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-saffron-50 via-cream-500 to-emerald-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       {/* Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-saffron-200 rounded-full opacity-20"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-emerald-200 rounded-full opacity-20"></div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-saffron-200 rounded-full opacity-25 blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-emerald-200 rounded-full opacity-25 blur-3xl"></div>
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-64 h-64 bg-turmeric-100 rounded-full opacity-15 blur-2xl"></div>
       </div>
 
-      <div className="max-w-md w-full space-y-8 relative">
+      <div className="max-w-md w-full space-y-8 relative animate-fade-in-up">
         {/* Header with Indian Motif */}
         <div className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="w-20 h-20 bg-saffron-500 rounded-full flex items-center justify-center shadow-lg">
-              <span className="text-4xl">🪔</span>
+            <div className="jharokha-icon w-20 h-24 bg-gradient-to-b from-saffron-400 to-saffron-600 shadow-xl mx-auto">
+              <span className="text-4xl animate-diya-flame inline-block">🪔</span>
             </div>
           </div>
-          <h2 className="font-heading text-3xl text-saffron-600">
-            Welcome Back to <span className="text-emerald-600">BudgetBandhan</span>
+          <h2 className="font-heading text-3xl mt-2">
+            Welcome Back to <span className="text-gold-foil">BudgetBandhan</span>
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-gray-500">
             Bandhan budget ka, sukoon dil ka
           </p>
         </div>
@@ -61,7 +62,7 @@ const Login = () => {
                 <input
                   id="email"
                   type="email"
-                  {...register('email', { 
+                  {...register('email', {
                     required: 'Email is required',
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -139,19 +140,11 @@ const Login = () => {
             </div>
           </form>
 
-          {/* Divider with Indian Pattern */}
+          {/* Divider — Rangoli style */}
           <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-saffron-200"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-saffron-500">✨ New to BudgetBandhan? ✨</span>
-              </div>
-            </div>
-
+            <div className="rangoli-divider"></div>
             {/* Register Link */}
-            <div className="mt-6 text-center">
+            <div className="text-center">
               <Link
                 to="/register"
                 className="inline-flex items-center text-emerald-600 hover:text-emerald-500 font-medium"

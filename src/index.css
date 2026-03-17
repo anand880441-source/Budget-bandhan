@@ -4,63 +4,556 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─────────────────────────────────────────────────────────────
+   UNIQUE INDIAN WEDDING KEYFRAMES
+   ───────────────────────────────────────────────────────────── */
+
+/* Gold foil text shimmer */
+@keyframes goldFoil {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+/* Rangoli slow rotation */
+@keyframes rangoli-spin {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+
+/* Diya flame oscillation */
+@keyframes diyaFlame {
+  0%,100% { transform: scaleX(1)   scaleY(1)   rotate(-2deg); opacity: 1;   }
+  25%      { transform: scaleX(0.9) scaleY(1.1) rotate(2deg);  opacity: 0.9; }
+  50%      { transform: scaleX(1.1) scaleY(0.95)rotate(-1deg); opacity: 1;   }
+  75%      { transform: scaleX(0.95)scaleY(1.05)rotate(3deg);  opacity: 0.95;}
+}
+
+/* Mehndi vine draw-in */
+@keyframes mehndDraw {
+  from { stroke-dashoffset: 300; opacity: 0; }
+  to   { stroke-dashoffset: 0;   opacity: 1; }
+}
+
+/* Fade in upward */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Kantha stitch border pulse */
+@keyframes kanthaGlow {
+  0%,100% { box-shadow: 0 0 0 2px rgba(255,153,51,0.20), 0 0 0 4px rgba(255,215,0,0.10); }
+  50%      { box-shadow: 0 0 0 2px rgba(255,153,51,0.45), 0 0 0 6px rgba(255,215,0,0.20); }
+}
+
+/* Peacock tail iridescent sweep */
+@keyframes peacockSheen {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+/* Bandhani pulse */
+@keyframes bandhaniPulse {
+  0%,100% { opacity:1; transform:scale(1);    }
+  50%      { opacity:.85; transform:scale(1.03); }
+}
+
+/* Float for decorative elements */
+@keyframes float {
+  0%,100% { transform: translateY(0px);    }
+  50%      { transform: translateY(-8px);  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BASE LAYER
+   ───────────────────────────────────────────────────────────── */
 @layer base {
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  * { margin:0; padding:0; box-sizing:border-box; }
 
   body {
     @apply font-body bg-cream-500 text-gray-800;
+    scroll-behavior: smooth;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading;
+  h1, h2, h3, h4, h5, h6 { @apply font-heading; }
+
+  /* Custom Scrollbar — saffron-to-emerald bead string */
+  ::-webkit-scrollbar        { width: 7px; height: 7px; }
+  ::-webkit-scrollbar-track  { background: #FFF4E6; border-radius: 999px; }
+  ::-webkit-scrollbar-thumb  {
+    background: repeating-linear-gradient(
+      90deg,
+      #FF9933 0px, #FF9933 4px,
+      #FFD700 4px, #FFD700 8px,
+      #046A38 8px, #046A38 12px
+    );
+    border-radius: 999px;
   }
+
+  /* Text selection — turmeric highlight */
+  ::selection { background-color: #FFE4CC; color: #8B4513; }
 }
 
+/* ─────────────────────────────────────────────────────────────
+   COMPONENT LAYER
+   ───────────────────────────────────────────────────────────── */
 @layer components {
-  .btn-primary {
-    @apply bg-saffron-500 hover:bg-saffron-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg;
-  }
 
-  .btn-secondary {
-    @apply bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg;
-  }
-
-  .btn-outline {
-    @apply border-2 border-saffron-500 text-saffron-500 hover:bg-saffron-500 hover:text-white font-semibold py-2 px-4 rounded-lg transition duration-300;
-  }
-
+  /* ╔═══════════════════════════════════════╗
+     ║  CARD — Mehndi Corner Ornament Style  ║
+     ╚═══════════════════════════════════════╝
+     Replaces the boring gradient top-bar with
+     hand-drawn SVG mehndi florals in each corner.
+     Background has a barely-visible rangoli radial watermark.
+  */
   .card {
-    @apply bg-white rounded-xl shadow-lg p-6 border-2 border-saffron-100 relative overflow-hidden;
+    @apply bg-white rounded-2xl p-6 relative overflow-hidden;
+    border: 1.5px solid rgba(255,153,51,0.22);
+    box-shadow:
+      0 4px 28px rgba(255,153,51,0.09),
+      0 1px 6px  rgba(0,0,0,0.05);
+    /* Rangoli watermark — 3 faint concentric petal rings */
+    background-image:
+      radial-gradient(ellipse at top    left,  rgba(255,153,51,0.05) 0%, transparent 55%),
+      radial-gradient(ellipse at bottom right, rgba(4,106,56,0.04)   0%, transparent 55%),
+      radial-gradient(circle  at center,       rgba(255,215,0,0.025) 0%, transparent 50%);
+    transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.25s ease;
+    animation: fadeInUp 0.45s ease both;
   }
 
+  .card:hover {
+    box-shadow:
+      0 10px 40px rgba(255,153,51,0.17),
+      0 2px  10px rgba(0,0,0,0.07);
+    border-color: rgba(255,153,51,0.45);
+    transform: translateY(-3px);
+  }
+
+  /* Mehndi corner — top-left */
   .card::before {
     content: '';
-    @apply absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-saffron-500 via-emerald-500 to-saffron-500;
+    position: absolute;
+    top: 0; left: 0;
+    width: 72px; height: 72px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72' fill='none'%3E%3Cpath d='M2 2 Q2 42 42 2Z' fill='%23FF993314'/%3E%3Cpath d='M3 3 Q3 30 30 3' stroke='%23FF9933' stroke-width='1.6' stroke-linecap='round' opacity='0.5'/%3E%3Cpath d='M3 3 Q3 20 20 3' stroke='%23CC7A29' stroke-width='1.1' stroke-linecap='round' opacity='0.38'/%3E%3Cpath d='M3 3 Q3 12 12 3' stroke='%23FFD700' stroke-width='1.3' stroke-linecap='round' opacity='0.5'/%3E%3Ccircle cx='5' cy='5' r='2.8' fill='%23FF9933' opacity='0.45'/%3E%3Ccircle cx='15' cy='3' r='1.6' fill='%23FFD700' opacity='0.6'/%3E%3Ccircle cx='3' cy='15' r='1.6' fill='%23FFD700' opacity='0.6'/%3E%3Ccircle cx='24' cy='3' r='1.2' fill='%23FF9933' opacity='0.45'/%3E%3Ccircle cx='3' cy='24' r='1.2' fill='%23FF9933' opacity='0.45'/%3E%3Cpath d='M13 2 Q30 2 30 19 Q30 30 13 32 Q2 18 13 2Z' fill='none' stroke='%23CC7A29' stroke-width='0.9' opacity='0.38'/%3E%3Ccircle cx='28' cy='6' r='1.1' fill='%23046A38' opacity='0.5'/%3E%3Ccircle cx='6' cy='28' r='1.1' fill='%23046A38' opacity='0.5'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 0;
   }
 
+  /* Mehndi corner — top-right (mirrored) */
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 72px; height: 72px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72' fill='none'%3E%3Cpath d='M2 2 Q2 42 42 2Z' fill='%23FF993314'/%3E%3Cpath d='M3 3 Q3 30 30 3' stroke='%23FF9933' stroke-width='1.6' stroke-linecap='round' opacity='0.5'/%3E%3Cpath d='M3 3 Q3 20 20 3' stroke='%23CC7A29' stroke-width='1.1' stroke-linecap='round' opacity='0.38'/%3E%3Cpath d='M3 3 Q3 12 12 3' stroke='%23FFD700' stroke-width='1.3' stroke-linecap='round' opacity='0.5'/%3E%3Ccircle cx='5' cy='5' r='2.8' fill='%23FF9933' opacity='0.45'/%3E%3Ccircle cx='15' cy='3' r='1.6' fill='%23FFD700' opacity='0.6'/%3E%3Ccircle cx='3' cy='15' r='1.6' fill='%23FFD700' opacity='0.6'/%3E%3Ccircle cx='24' cy='3' r='1.2' fill='%23FF9933' opacity='0.45'/%3E%3Ccircle cx='3' cy='24' r='1.2' fill='%23FF9933' opacity='0.45'/%3E%3Cpath d='M13 2 Q30 2 30 19 Q30 30 13 32 Q2 18 13 2Z' fill='none' stroke='%23CC7A29' stroke-width='0.9' opacity='0.38'/%3E%3Ccircle cx='28' cy='6' r='1.1' fill='%23046A38' opacity='0.5'/%3E%3Ccircle cx='6' cy='28' r='1.1' fill='%23046A38' opacity='0.5'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: scaleX(-1);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ╔═══════════════════════════════════════════════╗
+     ║  JHAROKHA ICON — Traditional Arch Window      ║
+     ╚═══════════════════════════════════════════════╝
+     Replaces plain circles with a Mughal arch silhouette.
+     Use instead of rounded-full on icon containers.
+  */
+  .jharokha-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    isolation: isolate;
+    /* Arch shape: flat bottom, pointed Mughal arch top */
+    clip-path: polygon(
+      15% 100%,
+      0%  70%,
+      0%  35%,
+      5%  20%,
+      15% 8%,
+      30% 0%,
+      50% 0%,
+      70% 0%,
+      85% 8%,
+      95% 20%,
+      100% 35%,
+      100% 70%,
+      85% 100%
+    );
+    transition: clip-path 0.4s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .jharokha-icon:hover {
+    clip-path: polygon(
+      12% 100%,
+      0%  72%,
+      0%  33%,
+      5%  18%,
+      13% 6%,
+      28% 0%,
+      50% 0%,
+      72% 0%,
+      87% 6%,
+      95% 18%,
+      100% 33%,
+      100% 72%,
+      88% 100%
+    );
+    transform: scale(1.08);
+  }
+
+  /* ╔═══════════════════════════════════════════════╗
+     ║  GOLD FOIL HEADING — Animated metallic gloss  ║
+     ╚═══════════════════════════════════════════════╝ */
+  .text-gold-foil {
+    background: linear-gradient(
+      105deg,
+      #b8860b 0%,
+      #FFD700 20%,
+      #FF9933 35%,
+      #ffe066 50%,
+      #CC7A29 65%,
+      #FFD700 80%,
+      #b8860b 100%
+    );
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: goldFoil 3.5s linear infinite;
+  }
+
+  /* ╔═══════════════════════════════════════════════╗
+     ║  PRIMARY BUTTON — Peacock Feather Sheen       ║
+     ╚═══════════════════════════════════════════════╝
+     Instead of a simple shimmer, uses iridescent
+     peacock-tail gradient that slowly shifts hue.
+  */
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-semibold text-white overflow-hidden;
+    background: linear-gradient(135deg, #FF9933 0%, #FFD700 40%, #CC7A29 70%, #FF9933 100%);
+    background-size: 300% 300%;
+    animation: peacockSheen 4s ease infinite;
+    box-shadow:
+      0 4px 16px rgba(255,153,51,0.40),
+      inset 0 1px 0 rgba(255,255,255,0.25);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+  .btn-primary:hover {
+    box-shadow:
+      0 8px 24px rgba(255,153,51,0.55),
+      inset 0 1px 0 rgba(255,255,255,0.30);
+    transform: translateY(-2px) scale(1.01);
+  }
+  .btn-primary:active  { transform: translateY(0) scale(0.99); }
+  .btn-primary:disabled {
+    opacity: 0.55; cursor: not-allowed;
+    transform: none; animation: none;
+    background: #FFC999;
+  }
+
+  /* ╔═════════════════════════════════╗
+     ║  SECONDARY BUTTON — Emerald    ║
+     ╚═════════════════════════════════╝ */
+  .btn-secondary {
+    @apply relative inline-flex items-center justify-center font-semibold py-2 px-4 rounded-xl text-white overflow-hidden;
+    background: linear-gradient(135deg, #046A38, #339F53, #046A38);
+    background-size: 200% auto;
+    animation: peacockSheen 5s ease infinite;
+    box-shadow: 0 4px 14px rgba(4,106,56,0.38);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+  .btn-secondary:hover {
+    box-shadow: 0 7px 20px rgba(4,106,56,0.52);
+    transform: translateY(-2px);
+  }
+  .btn-secondary:active { transform: translateY(0); }
+
+  /* ╔═════════════════════════════════════════════╗
+     ║  OUTLINE BUTTON — Thread-work border pulse  ║
+     ╚═════════════════════════════════════════════╝ */
+  .btn-outline {
+    @apply inline-flex items-center justify-center font-semibold py-2 px-4 rounded-xl;
+    border: 2px dashed #FF9933;
+    color: #CC7A29;
+    background: transparent;
+    transition: background 0.3s, color 0.3s, border-style 0.2s, box-shadow 0.3s, transform 0.2s;
+  }
+  .btn-outline:hover {
+    border-style: solid;
+    background: #FF9933;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(255,153,51,0.40);
+    transform: translateY(-1px);
+  }
+  .btn-outline:active { transform: translateY(0); }
+
+  /* ╔══════════════════════════════════════════════════╗
+     ║  INPUT FIELD — Terracotta rim with kajal focus   ║
+     ╚══════════════════════════════════════════════════╝ */
   .input-field {
-    @apply w-full px-4 py-2 border-2 border-saffron-200 rounded-lg focus:border-saffron-500 focus:outline-none transition duration-300 bg-white;
+    @apply w-full px-4 py-2.5 rounded-xl bg-white font-body text-gray-800;
+    border: 2px solid rgba(255,153,51,0.30);
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s, background 0.2s;
+  }
+  .input-field::placeholder { color: #c8a882; }
+  .input-field:hover {
+    border-color: rgba(255,153,51,0.55);
+    background: #FFFCF5;
+  }
+  .input-field:focus {
+    border-color: #FF9933;
+    background: #fff;
+    /* Kohl double-ring focus: inner saffron, outer gold */
+    box-shadow:
+      0 0 0 3px rgba(255,153,51,0.18),
+      0 0 0 5px rgba(255,215,0,0.08);
   }
 
+  /* ╔═══════════════════════════════════════════════════════╗
+     ║  NAV — Kantha stitch fabric texture on active border  ║
+     ╚═══════════════════════════════════════════════════════╝ */
   .nav-link {
-    @apply text-gray-700 hover:text-saffron-500 px-3 py-2 rounded-md text-sm font-medium transition duration-300;
+    @apply relative px-3 py-2 text-sm font-medium;
+    color: rgba(255,255,255,0.82);
+    text-decoration: none;
+    transition: color 0.25s;
   }
+  /* Kantha stitch underline: dashed dots instead of solid line */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: 50%;
+    width: 0; height: 2px;
+    /* Alternating saffron-emerald-gold dots = kantha running stitch */
+    background: repeating-linear-gradient(
+      90deg,
+      #FFD700 0px, #FFD700 5px,
+      transparent 5px, transparent 9px
+    );
+    border-radius: 999px;
+    transform: translateX(-50%);
+    transition: width 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .nav-link:hover { color: #fff; }
+  .nav-link:hover::after { width: 80%; }
 
   .nav-link-active {
-    @apply text-saffron-500 border-b-2 border-saffron-500;
+    color: #FFD700 !important;
+    font-weight: 600;
+  }
+  .nav-link-active::after {
+    width: 80% !important;
+    background: repeating-linear-gradient(
+      90deg,
+      #FFD700 0px, #FFD700 5px,
+      #FF9933 5px, #FF9933 10px
+    ) !important;
+  }
+
+  /* ╔═══════════════════════════════════════════════╗
+     ║  DIYA SPINNER — flame CSS shape, not a circle ║
+     ╚═══════════════════════════════════════════════╝ */
+  .diya-spinner {
+    display: inline-block;
+    width: 36px; height: 44px;
+    position: relative;
+  }
+  .diya-spinner::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 28px; height: 16px;
+    background: linear-gradient(180deg, #CC7A29, #8B4513);
+    border-radius: 50% 50% 60% 60% / 40% 40% 60% 60%;
+  }
+  .diya-spinner::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 16px; height: 30px;
+    background: linear-gradient(180deg, #fff7d4 0%, #FFD700 30%, #FF9933 70%, #E44C4C 100%);
+    border-radius: 50% 50% 20% 20% / 60% 60% 20% 20%;
+    animation: diyaFlame 1.2s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(255,153,51,0.8));
+  }
+
+  /* ╔═══════════════════════════════════════════════╗
+     ║  BANDHANI BADGE — tie-dye pill               ║
+     ╚═══════════════════════════════════════════════╝ */
+  .bandhani-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6) 0%, transparent 40%),
+                radial-gradient(circle at 70% 70%, rgba(255,255,255,0.4) 0%, transparent 40%),
+                linear-gradient(135deg, #FF9933, #FFD700);
+    color: #663D14;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 8px rgba(255,153,51,0.30);
+    animation: bandhaniPulse 3s ease infinite;
+  }
+  .bandhani-badge-emerald {
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5) 0%, transparent 40%),
+                radial-gradient(circle at 70% 70%, rgba(255,255,255,0.3) 0%, transparent 40%),
+                linear-gradient(135deg, #046A38, #339F53);
+    color: #fff;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 2px 8px rgba(4,106,56,0.30);
+  }
+
+  /* ╔══════════════════════════════╗
+     ║  KANTHA GLOW border effect   ║
+     ╚══════════════════════════════╝ */
+  .kantha-glow {
+    animation: kanthaGlow 2.5s ease-in-out infinite;
+    border-radius: 1rem;
   }
 }
 
+/* ─────────────────────────────────────────────────────────────
+   UTILITIES LAYER
+   ───────────────────────────────────────────────────────────── */
 @layer utilities {
+
+  /* ── Paisley border image utility ── */
   .border-paisley {
-    border-image: repeating-linear-gradient(45deg, #FF9933, #FF9933 10px, #046A38 10px, #046A38 20px) 20;
+    border-image: repeating-linear-gradient(
+      45deg,
+      #FF9933, #FF9933 8px,
+      #FFD700 8px, #FFD700 12px,
+      #046A38 12px, #046A38 20px
+    ) 20;
   }
 
+  /* ── Rangoli Divider ─────────────────────────────────────
+     A horizontal rule replaced with a mandala-style divider.
+     Uses conic-gradient petals + radial center dot.
+     Usage: <div class="rangoli-divider" />
+  ── */
+  .rangoli-divider {
+    position: relative;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    margin: 1.5rem 0;
+  }
+  .rangoli-divider::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    height: 1px;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0px, transparent 6px,
+      rgba(255,153,51,0.35) 6px, rgba(255,153,51,0.35) 10px
+    );
+  }
+  .rangoli-divider::after {
+    content: '';
+    position: relative;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background:
+      /* 8-petal conic rangoli */
+      conic-gradient(
+        from 0deg,
+        #FF9933 0deg,  #FF9933 22deg,
+        transparent  22deg, transparent  45deg,
+        #FFD700 45deg, #FFD700 67deg,
+        transparent  67deg, transparent  90deg,
+        #FF9933 90deg, #FF9933 112deg,
+        transparent 112deg, transparent 135deg,
+        #FFD700 135deg, #FFD700 157deg,
+        transparent 157deg, transparent 180deg,
+        #046A38 180deg, #046A38 202deg,
+        transparent 202deg, transparent 225deg,
+        #FFD700 225deg, #FFD700 247deg,
+        transparent 247deg, transparent 270deg,
+        #046A38 270deg, #046A38 292deg,
+        transparent 292deg, transparent 315deg,
+        #FFD700 315deg, #FFD700 337deg,
+        transparent 337deg, transparent 360deg
+      );
+    box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgba(255,153,51,0.30);
+    animation: rangoli-spin 12s linear infinite;
+  }
+
+  /* ── Wedding gradient bg ── */
   .bg-gradient-wedding {
-    @apply bg-gradient-to-r from-saffron-500 via-turmeric-500 to-emerald-500;
+    background: linear-gradient(135deg, #FF9933 0%, #FFD700 40%, #046A38 100%);
+    background-size: 200% 200%;
+    animation: peacockSheen 6s ease infinite;
+  }
+
+  /* ── Gold foil text ── */
+  .text-gradient-saffron {
+    background: linear-gradient(135deg, #FF9933, #FFD700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-wedding {
+    background: linear-gradient(135deg, #FF9933 0%, #FFD700 50%, #046A38 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Entry animation ── */
+  .animate-fade-in-up  { animation: fadeInUp 0.50s ease both; }
+  .animate-float       { animation: float 5s ease-in-out infinite; }
+  .animate-rangoli     { animation: rangoli-spin 12s linear infinite; }
+  .animate-diya-flame  { animation: diyaFlame 1.2s ease-in-out infinite; }
+  .animate-gold-foil   { animation: goldFoil 3.5s linear infinite; }
+
+  /* ── Kantha running-stitch separator ── */
+  .kantha-line {
+    height: 3px;
+    background: repeating-linear-gradient(
+      90deg,
+      #FF9933 0px, #FF9933 12px,
+      transparent 12px, transparent 16px,
+      #FFD700 16px, #FFD700 28px,
+      transparent 28px, transparent 32px,
+      #046A38 32px, #046A38 44px,
+      transparent 44px, transparent 48px
+    );
+    border-radius: 999px;
+    opacity: 0.7;
+  }
+
+  /* ── Saree border (vertical left accent) ── */
+  .saree-border-left {
+    border-left: 4px solid transparent;
+    border-image: repeating-linear-gradient(
+      180deg,
+      #FF9933 0px, #FF9933 10px,
+      #FFD700 10px, #FFD700 14px,
+      #046A38 14px, #046A38 24px,
+      #FFD700 24px, #FFD700 28px
+    ) 1;
+  }
+
+  /* ── Marigold glow helper ── */
+  .marigold-glow {
+    box-shadow: 0 0 20px rgba(255,153,51,0.35), 0 0 40px rgba(255,215,0,0.15);
+  }
+
+  /* ── Subtle Bandhani background ── */
+  .bandhani-bg {
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255,153,51,0.12) 0%, transparent 25%),
+      radial-gradient(circle at 80% 20%, rgba(255,215,0,0.10)  0%, transparent 25%),
+      radial-gradient(circle at 50% 50%, rgba(4,106,56,0.06)   0%, transparent 30%),
+      radial-gradient(circle at 20% 80%, rgba(255,215,0,0.10)  0%, transparent 25%),
+      radial-gradient(circle at 80% 80%, rgba(255,153,51,0.12) 0%, transparent 25%);
   }
 }

@@ -31,7 +31,17 @@ export const getWeddings = async (req, res) => {
     const weddings = await Wedding.find({ user: req.user._id }).sort({
       createdAt: -1,
     });
-    res.json(weddings);
+    
+    // Calculate total budget for each wedding
+    const weddingsWithBudget = await Promise.all(
+      weddings.map(async (wedding) => {
+        const weddingObj = wedding.toObject();
+        weddingObj.totalBudget = await calculateTotalBudget(wedding);
+        return weddingObj;
+      })
+    );
+    
+    res.json(weddingsWithBudget);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -49,7 +59,11 @@ export const getWeddingById = async (req, res) => {
     });
 
     if (wedding) {
-      res.json(wedding);
+      // Calculate total budget before sending
+      const weddingObj = wedding.toObject();
+      weddingObj.totalBudget = await calculateTotalBudget(wedding);
+      
+      res.json(weddingObj);
     } else {
       res.status(404).json({ message: "Wedding not found" });
     }
@@ -62,9 +76,6 @@ export const getWeddingById = async (req, res) => {
 // @desc    Update wedding
 // @route   PUT /api/weddings/:id
 // @access  Private
-// @desc    Update wedding
-// @route   PUT /api/weddings/:id
-// @access  Private
 export const updateWedding = async (req, res) => {
   try {
     const wedding = await Wedding.findOne({
@@ -73,32 +84,26 @@ export const updateWedding = async (req, res) => {
     });
 
     if (wedding) {
-      // Update wedding fields
       Object.assign(wedding, req.body);
 
-      // Recalculate base budget if key fields changed
-      if (
-        req.body.city ||
-        req.body.venueTier ||
-        req.body.guestCount ||
-        req.body.outstationPercentage ||
-        req.body.roomBlocks
-      ) {
+      // Recalculate budget if key fields changed
+      if (req.body.city || req.body.venueTier || req.body.guestCount) {
         wedding.budgetRanges = await calculateBudgetRanges(wedding);
       }
 
-      // Calculate total budget including decor and artists
-      const totalBudget = await calculateTotalBudget(wedding);
-      wedding.totalBudget = totalBudget;
-
       const updatedWedding = await wedding.save();
-      res.json(updatedWedding);
+      
+      // Calculate total budget for response
+      const weddingObj = updatedWedding.toObject();
+      weddingObj.totalBudget = await calculateTotalBudget(updatedWedding);
+      
+      res.json(weddingObj);
     } else {
       res.status(404).json({ message: "Wedding not found" });
     }
   } catch (error) {
-    console.error("Error in updateWedding:", error);
-    res.status(500).json({ message: "Server error", error: error.message });
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
