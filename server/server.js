@@ -1,13 +1,16 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import cors from 'cors';
-import connectDB from './config/db.js';
-import authRoutes from './routes/authRoutes.js';
-import guestRoutes from './routes/guestRoutes.js';
-import weddingRoutes from './routes/weddingRoutes.js';
-import decorRoutes from './routes/decorRoutes.js';
-import artistRoutes from './routes/artistRoutes.js';
-import fnbRoutes from './routes/fnbRoutes.js';
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import connectDB from "./config/db.js";
+import authRoutes from "./routes/authRoutes.js";
+import guestRoutes from "./routes/guestRoutes.js";
+import weddingRoutes from "./routes/weddingRoutes.js";
+import decorRoutes from "./routes/decorRoutes.js";
+import artistRoutes from "./routes/artistRoutes.js";
+import fnbRoutes from "./routes/fnbRoutes.js";
+import logisticsRoutes from "./routes/logisticsRoutes.js";
+import reportRoutes from "./routes/reportRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 dotenv.config();
 
@@ -22,20 +25,37 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/guests', guestRoutes);
-app.use('/api/weddings', weddingRoutes);
-app.use('/api/decor', decorRoutes);
-app.use('/api/artists', artistRoutes);
-app.use('/api/fnb', fnbRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/guests", guestRoutes);
+app.use("/api/weddings", weddingRoutes);
+app.use("/api/decor", decorRoutes);
+app.use("/api/artists", artistRoutes);
+app.use("/api/fnb", fnbRoutes);
+app.use("/api/logistics", logisticsRoutes);
+app.use("/api/reports", reportRoutes);
 
-
+// Add this AFTER all route registrations (before error handling)
+console.log("=== REGISTERED ROUTES ===");
+app._router.stack.forEach((r) => {
+  if (r.route && r.route.path) {
+    console.log(`${Object.keys(r.route.methods)} ${r.route.path}`);
+  } else if (r.name === "router") {
+    r.handle.stack.forEach((handler) => {
+      if (handler.route) {
+        console.log(
+          `${Object.keys(handler.route.methods)} /api${handler.route.path}`,
+        );
+      }
+    });
+  }
+});
+console.log("========================");
+app.use("/api/admin", adminRoutes);
 
 // Base route
-app.get('/', (req, res) => {
-  res.json({ message: 'BudgetBandhan API is running' });
+app.get("/", (req, res) => {
+  res.json({ message: "BudgetBandhan API is running" });
 });
-
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -43,7 +63,7 @@ app.use((err, req, res, next) => {
   res.status(statusCode);
   res.json({
     message: err.message,
-    stack: process.env.NODE_ENV === 'production' ? null : err.stack,
+    stack: process.env.NODE_ENV === "production" ? null : err.stack,
   });
 });
 
