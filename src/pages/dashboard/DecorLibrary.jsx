@@ -109,11 +109,14 @@ const DecorLibrary = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-saffron-50 to-cream-500 p-6">
-      <div className="container mx-auto">
+      <div className="max-w-[1700px] mx-auto">
         {/* Header */}
-        <div className="mb-6">
-          <h1 className="font-heading text-3xl text-saffron-600 mb-2">Decor Library</h1>
-          <p className="text-gray-600">Browse and select decor for your wedding functions</p>
+        <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <h1 className="text-gold-foil text-4xl mb-2">Decor Library</h1>
+            <p className="text-gray-500 font-medium italic">Transform your venue into a royal celebration space</p>
+          </div>
+          <div className="kantha-line md:w-48 !h-[2px] opacity-40"></div>
         </div>
 
         {/* Mobile Selected Button */}
@@ -126,8 +129,15 @@ const DecorLibrary = () => {
 
         <div className="flex gap-6">
           {/* Filters Sidebar */}
-          <div className="hidden md:block w-64 flex-shrink-0">
-            <DecorFilters filters={filters} onFilterChange={handleFilterChange} />
+          <div className="hidden md:block w-72 flex-shrink-0">
+            <div className="sticky top-6">
+              <div className="card !p-5 bg-white/80 backdrop-blur-sm border-saffron-200/50">
+                <h2 className="font-heading text-lg text-saffron-600 mb-4 flex items-center gap-2">
+                  <span>🎨</span> Refine Decor
+                </h2>
+                <DecorFilters filters={filters} onFilterChange={handleFilterChange} />
+              </div>
+            </div>
           </div>
 
           {/* Main Content */}
@@ -190,7 +200,7 @@ const DecorLibrary = () => {
                 <p className="text-gray-400">Try adjusting your filters</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6">
                 {decorItems.map(item => (
                   <DecorCard
                     key={item._id}
@@ -204,7 +214,7 @@ const DecorLibrary = () => {
           </div>
 
           {/* Selected Items Sidebar - Desktop */}
-          <div className="hidden md:block w-80 flex-shrink-0">
+          <div className="hidden md:block w-72 flex-shrink-0">
             <SelectedDecorSidebar
               selectedItems={selectedItems}
               onRemove={handleRemoveSelected}

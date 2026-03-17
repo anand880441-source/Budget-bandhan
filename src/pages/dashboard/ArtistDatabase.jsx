@@ -94,11 +94,14 @@ const ArtistDatabase = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-saffron-50 to-cream-500 p-6">
-      <div className="container mx-auto">
+      <div className="max-w-[1700px] mx-auto">
         {/* Header */}
-        <div className="mb-6">
-          <h1 className="font-heading text-3xl text-saffron-600 mb-2">Artist Database</h1>
-          <p className="text-gray-600">Find and book the best artists for your wedding</p>
+        <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <h1 className="text-gold-foil text-4xl mb-2">Artist Database</h1>
+            <p className="text-gray-500 font-medium italic">Handpick elite performers to grace your celebrations</p>
+          </div>
+          <div className="kantha-line md:w-48 !h-[2px] opacity-40"></div>
         </div>
 
         {/* Mobile Selected Button */}
@@ -113,16 +116,19 @@ const ArtistDatabase = () => {
           {/* Main Content */}
           <div className="flex-1">
             {/* Filters Bar */}
-            <div className="bg-white rounded-xl shadow-lg p-4 mb-6">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="card !p-5 mb-8 bg-white/80 backdrop-blur-sm border-saffron-200/50">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {/* Search */}
-                <input
-                  type="text"
-                  placeholder="Search artists..."
-                  value={filters.search}
-                  onChange={(e) => handleFilterChange('search', e.target.value)}
-                  className="input-field"
-                />
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
+                  <input
+                    type="text"
+                    placeholder="Search artists..."
+                    value={filters.search}
+                    onChange={(e) => handleFilterChange('search', e.target.value)}
+                    className="input-field !pl-10"
+                  />
+                </div>
 
                 {/* Category Filter */}
                 <select
@@ -245,7 +251,7 @@ const ArtistDatabase = () => {
                 <p className="text-gray-400">Try adjusting your filters</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6">
                 {artists.map(artist => (
                   <ArtistCard
                     key={artist._id}
@@ -259,7 +265,7 @@ const ArtistDatabase = () => {
           </div>
 
           {/* Selected Artists Sidebar - Desktop */}
-          <div className="hidden md:block w-80 flex-shrink-0">
+          <div className="hidden md:block w-72 flex-shrink-0">
             <SelectedArtistSidebar
               selectedArtists={selectedArtists}
               onRemove={handleRemoveSelected}
