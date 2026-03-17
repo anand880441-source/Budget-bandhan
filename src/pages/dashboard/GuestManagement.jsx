@@ -162,16 +162,17 @@ const GuestManagement = () => {
     <div className="min-h-screen bg-gradient-to-br from-saffron-50 to-cream-500 p-6">
       <div className="container mx-auto">
         {/* Header */}
-        <div className="mb-6">
-          <h1 className="font-heading text-3xl text-saffron-600 mb-2">Guest Management</h1>
-          <p className="text-gray-600">Manage your wedding guests and track RSVPs</p>
+        <div className="mb-6 animate-fade-in-up">
+          <h1 className="font-heading text-3xl text-saffron-600 mb-2">👥 Guest Management</h1>
+          <div className="kantha-line w-32 mb-1"></div>
+          <p className="text-gray-400 text-sm">Manage your wedding guests and track RSVPs</p>
         </div>
 
         {/* Stats Section */}
         {stats && <RSVPStats stats={stats} />}
 
         {/* Actions Bar */}
-        <div className="bg-white rounded-lg shadow p-4 mb-6">
+        <div className="card mb-6">
           <div className="flex flex-wrap gap-3 items-center justify-between">
             <div className="flex flex-wrap gap-3">
               <button
@@ -254,9 +255,9 @@ const GuestManagement = () => {
 
         {/* Guest Table */}
         {loading ? (
-          <div className="text-center py-12">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-saffron-500 border-t-transparent"></div>
-            <p className="mt-2 text-gray-600">Loading guests...</p>
+          <div className="text-center py-16">
+            <div className="diya-spinner mx-auto mb-5"></div>
+            <p className="text-saffron-700 font-heading">Loading guests...</p>
           </div>
         ) : (
           <>
