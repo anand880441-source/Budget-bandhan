@@ -24,7 +24,7 @@ const FnBPlanning = () => {
     pages: 1,
     total: 0
   });
-  
+
   // Selection states
   const [selectedMeals, setSelectedMeals] = useState([]);
   const [selectedBar, setSelectedBar] = useState(null);
@@ -81,7 +81,7 @@ const FnBPlanning = () => {
   };
 
   const handleSelectPackage = (pkg) => {
-    switch(pkg.category) {
+    switch (pkg.category) {
       case 'meal':
         setSelectedMeals(prev => {
           const exists = prev.find(p => p._id === pkg._id);
@@ -134,7 +134,7 @@ const FnBPlanning = () => {
   };
 
   const isSelected = (pkg) => {
-    switch(pkg.category) {
+    switch (pkg.category) {
       case 'meal':
         return selectedMeals.some(p => p._id === pkg._id);
       case 'bar':
@@ -148,11 +148,14 @@ const FnBPlanning = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-saffron-50 to-cream-500 p-6">
-      <div className="container mx-auto">
+      <div className="max-w-[1700px] mx-auto">
         {/* Header */}
-        <div className="mb-6">
-          <h1 className="font-heading text-3xl text-saffron-600 mb-2">Food & Beverage Planning</h1>
-          <p className="text-gray-600">Plan the perfect menu for your wedding celebrations</p>
+        <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <h1 className="text-gold-foil text-4xl mb-2">Food & Beverage</h1>
+            <p className="text-gray-500 font-medium italic">Curate a feast that will be remembered for generations</p>
+          </div>
+          <div className="kantha-line md:w-48 !h-[2px] opacity-40"></div>
         </div>
 
         {/* Mobile Selected Button */}
@@ -165,8 +168,15 @@ const FnBPlanning = () => {
 
         <div className="flex gap-6">
           {/* Filters Sidebar */}
-          <div className="hidden md:block w-64 flex-shrink-0">
-            <FnBFilters filters={filters} onFilterChange={handleFilterChange} />
+          <div className="hidden md:block w-72 flex-shrink-0">
+            <div className="sticky top-6">
+              <div className="card !p-5 bg-white/80 backdrop-blur-sm border-saffron-100">
+                <h2 className="font-heading text-lg text-saffron-600 mb-4 flex items-center gap-2">
+                  <span>🍱</span> Menu Filters
+                </h2>
+                <FnBFilters filters={filters} onFilterChange={handleFilterChange} />
+              </div>
+            </div>
           </div>
 
           {/* Main Content */}
@@ -219,7 +229,7 @@ const FnBPlanning = () => {
                 <p className="text-gray-400">Try adjusting your filters</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6">
                 {packages.map(pkg => (
                   <FnBPackageCard
                     key={pkg._id}
@@ -233,20 +243,26 @@ const FnBPlanning = () => {
           </div>
 
           {/* Sidebar */}
-          <div className="hidden md:block w-80 flex-shrink-0 space-y-6">
-            <FnBCalculator 
-              wedding={currentWedding}
-            />
-            <SelectedFnBSidebar
-              selectedMeals={selectedMeals}
-              selectedBar={selectedBar}
-              selectedCounters={selectedCounters}
-              onRemoveMeal={handleRemoveMeal}
-              onRemoveBar={handleRemoveBar}
-              onRemoveCounter={handleRemoveCounter}
-              onConfirm={handleConfirmSelection}
-              weddingId={currentWeddingId}
-            />
+          <div className="hidden md:block w-72 flex-shrink-0">
+            <div className="sticky top-6 space-y-6">
+              <div className="card !p-5 bg-gradient-to-br from-cream-50 to-white border-turmeric-200">
+                <FnBCalculator
+                  wedding={currentWedding}
+                />
+              </div>
+              <div className="card !p-5 bg-white/90 border-emerald-100">
+                <SelectedFnBSidebar
+                  selectedMeals={selectedMeals}
+                  selectedBar={selectedBar}
+                  selectedCounters={selectedCounters}
+                  onRemoveMeal={handleRemoveMeal}
+                  onRemoveBar={handleRemoveBar}
+                  onRemoveCounter={handleRemoveCounter}
+                  onConfirm={handleConfirmSelection}
+                  weddingId={currentWeddingId}
+                />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -261,7 +277,7 @@ const FnBPlanning = () => {
                 >
                   ✕
                 </button>
-                <FnBCalculator 
+                <FnBCalculator
                   wedding={currentWedding}
                 />
                 <SelectedFnBSidebar

@@ -58,10 +58,10 @@ const SelectedArtistSidebar = ({ selectedArtists, onRemove, onConfirm, weddingId
           estimatedCost: artist.priceRange?.medium || 0
         }))
       });
-      
+
       toast.success(`Added ${selectedArtists.length} artists to your wedding plan!`);
       onConfirm();
-      
+
       // Offer to view wedding
       toast((t) => (
         <div className="flex gap-2 items-center">
