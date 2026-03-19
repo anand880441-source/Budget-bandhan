@@ -31,16 +31,16 @@ export const getWeddings = async (req, res) => {
     const weddings = await Wedding.find({ user: req.user._id }).sort({
       createdAt: -1,
     });
-    
+
     // Calculate total budget for each wedding
     const weddingsWithBudget = await Promise.all(
       weddings.map(async (wedding) => {
         const weddingObj = wedding.toObject();
         weddingObj.totalBudget = await calculateTotalBudget(wedding);
         return weddingObj;
-      })
+      }),
     );
-    
+
     res.json(weddingsWithBudget);
   } catch (error) {
     console.error(error);
@@ -53,17 +53,18 @@ export const getWeddings = async (req, res) => {
 // @access  Private
 export const getWeddingById = async (req, res) => {
   try {
+    // Check if the ID is a valid ObjectId format
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({ message: "Invalid wedding ID format" });
+    }
+
     const wedding = await Wedding.findOne({
       _id: req.params.id,
       user: req.user._id,
     });
 
     if (wedding) {
-      // Calculate total budget before sending
-      const weddingObj = wedding.toObject();
-      weddingObj.totalBudget = await calculateTotalBudget(wedding);
-      
-      res.json(weddingObj);
+      res.json(wedding);
     } else {
       res.status(404).json({ message: "Wedding not found" });
     }
@@ -92,11 +93,11 @@ export const updateWedding = async (req, res) => {
       }
 
       const updatedWedding = await wedding.save();
-      
+
       // Calculate total budget for response
       const weddingObj = updatedWedding.toObject();
       weddingObj.totalBudget = await calculateTotalBudget(updatedWedding);
-      
+
       res.json(weddingObj);
     } else {
       res.status(404).json({ message: "Wedding not found" });
