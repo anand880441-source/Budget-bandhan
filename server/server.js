@@ -19,8 +19,34 @@ connectDB();
 
 const app = express();
 
+// ========== FIXED CORS CONFIGURATION ==========
+const allowedOrigins = [
+  'https://budget-bandhan.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:3000'
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, etc)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log('Blocked origin:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+}));
+
+// IMPORTANT: Handle preflight requests for all routes
+app.options('*', cors());
+
 // Middleware
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -33,8 +59,9 @@ app.use("/api/artists", artistRoutes);
 app.use("/api/fnb", fnbRoutes);
 app.use("/api/logistics", logisticsRoutes);
 app.use("/api/reports", reportRoutes);
+app.use("/api/admin", adminRoutes);
 
-// Add this AFTER all route registrations (before error handling)
+// Add this AFTER all route registrations (for debugging)
 console.log("=== REGISTERED ROUTES ===");
 app._router.stack.forEach((r) => {
   if (r.route && r.route.path) {
@@ -50,7 +77,6 @@ app._router.stack.forEach((r) => {
   }
 });
 console.log("========================");
-app.use("/api/admin", adminRoutes);
 
 // Base route
 app.get("/", (req, res) => {
