@@ -54,7 +54,7 @@ export const weddingService = {
   // Calculate budget
   async calculateBudget(params) {
     try {
-      const response = await api.post('/weddings/calculate', params);
+      const response = await api.post('/calculate', params);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
