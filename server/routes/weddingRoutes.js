@@ -16,6 +16,15 @@ const router = express.Router();
 // Apply protect to all routes
 router.use(protect);
 
+// Add this TEMPORARILY right after router.use(protect)
+router.get('/ping', (req, res) => {
+  res.json({ 
+    message: 'Wedding routes are working!',
+    timestamp: new Date().toISOString(),
+    commit: 'your-latest-commit-hash' 
+  });
+});
+
 // Calculate budget route - THIS MUST COME BEFORE /:id
 router.post('/calculate', calculateBudget);
 
